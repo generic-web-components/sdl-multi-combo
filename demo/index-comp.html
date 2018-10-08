@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>sdl-multi-combo demo</title>
+    <script src="../../sdl-multi-combo-loader.js"></script>
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h1>Basic sdl-multi-combo demo -- with 'ajaxUrl' specified</h1>
+      <p><b><u>Note:</u></b>  When you specify the 'ajaxUrl' the sdl-multi-combo will manage the ajax call for you.  It will fire it's 'changed' event only after the ajax has come back.  The event.detail.payload will hold the response from the ajax call.</p>
+      <demo-snippet>
+        <template>         
+
+<!-- If using as a stand-alone-component:  use sdl-multi-combo-loader.js
+<script src="./node_modules/@sdl-web/sdl-multi-combo/build-component/sdl-multi-combo-loader.js"></script> -->
+
+<!-- If using in an existing polymer project:  use sdl-multi-combo.js directly-->
+<script type="import" src="@sdl-web/sdl-multi-combo/src/components/sdl-multi-combo.js"></script> 
+
+<!-- Now add sdl-multi-combo to html section -->
+<sdl-multi-combo id='srch-bar1' ajaxUrl='./data/srch-data.txt'>  
+
+    <!-- Put whatever input fields (and styling) you want into this slot -->
+  <form>
+    <paper-input name="input1" label="Filter Search">
+      <iron-icon icon="search" id="srch-icon" slot="prefix"></iron-icon>
+    </paper-input>
+  </form>
+  
+</sdl-multi-combo>
+
+
+<!-- Finally, listen for change event -->
+<!-- <script>
+    $('document').ready(function(){
+
+      var srch1 = document.querySelector('#srch-bar1');
+      srch1.addEventListener("changed", function(e) {
+        // Do something with the e.detail.payload here...
+      }, false);
+
+    });
+</script> -->
+
+        </template>
+      </demo-snippet>
+    </div>
+    <div id="message1"></div>
+    <br><br><br>
+
+    <div class="vertical-section-container centered">
+      <h1>Basic sdl-multi-combo demo -- no 'ajaxUrl'</h1>
+       <p><b><u>Note:</u></b>  When no 'ajaxUrl' is specified then sdl-multi-combo will fire it's 'changed' event after each change to the form.  The event.detail.formData will be passed back to the user so that they can do their own ajax if desired.</p>
+      <demo-snippet>
+        <template>
+
+          <sdl-multi-combo id='srch-bar2'>
+
+            <form>
+              <paper-input name="input2" label="Filter Search">
+                <iron-icon icon="search" id="srch-icon" slot="prefix"></iron-icon>
+              </paper-input>
+              First name: <input type="text" name="fname"><br>
+              Last name: <input type="text" name="lname"><br>
+            </form>
+            
+          </sdl-multi-combo>
+
+        </template>
+      </demo-snippet>
+    </div>
+    <div id="message2"></div>
+    <br><br><br>
+
+    <script>
+    addEventListener('DOMContentLoaded', function(){ 
+
+        setTimeout(function(){ 
+        var srch1 = document.querySelector('#srch-bar1');
+        var srch2 = document.querySelector('#srch-bar2');
+
+          srch1.addEventListener("changed", function(e) {
+            var message = document.querySelector('#message1');
+            message.innerHTML = "<b><u>'changed' event fired:</u></b>&nbsp;&nbsp;&nbsp;";
+            message.innerHTML += "<br>e.detail.formData = " + JSON.stringify(e.detail.formData);
+            message.innerHTML += "<br>e.detail.payload = " + JSON.stringify(e.detail.payload);
+          }, false);
+
+          srch2.addEventListener("changed", function(e) {
+            var message = document.querySelector('#message2');
+            message.innerHTML = "<b><u>'changed' event fired:</u></b>&nbsp;&nbsp;&nbsp;";
+            message.innerHTML += "<br>e.detail.formData = " + JSON.stringify(e.detail.formData);
+          }, false);
+          
+        }, 3000);
+
+
+      }, false);
+
+    </script>
+  </body>
+</html>

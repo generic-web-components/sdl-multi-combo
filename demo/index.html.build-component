@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>sdl-multi-combo demo</title>
+    <script src="../../sdl-multi-combo-loader.js"></script>
+
+  </head>
+  <body>
+      <script src="./node_modules/@sdl-web/sdl-multi-combo/build-component/sdl-multi-combo-loader.js"></script>
+
+      <sdl-multi-combo name="combo1-data" id='combo1-data' url='./data/srch-data.txt' name="names">  
+          <vaadin-combo-box name="combo1" item-label-path="name" item-value-path="_id" label="Name"></vaadin-combo-box>
+      </sdl-multi-combo>
+
+
+    	<div id="message1"></div>
+    <br><br><br>
+
+    <script>
+    addEventListener('DOMContentLoaded', function(){ 
+
+        var data = document.querySelector('#combo1-data');
+
+          data.addEventListener("sdl-multi-combo-ready", function(e) {
+            var message = document.querySelector('#message1');
+            message.innerHTML = "<b><u>'changed' event fired:</u></b>&nbsp;&nbsp;&nbsp;";
+            message.innerHTML += "<br>e.detail.name= " + JSON.stringify(e.detail.name);
+            message.innerHTML += "<br>e.detail.payload = " + JSON.stringify(e.detail.payload);
+          }, false);
+
+
+
+      }, false);
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>sdl-srch-bar demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="module" src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script type="module" src="../src/components/sdl-multi-combo.js"></script>
+    <script type="module">
+      import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+      import '@polymer/iron-demo-helpers/demo-snippet.js';
+      import '@polymer/paper-input/paper-input.js';
+      import '@polymer/iron-icons/iron-icons.js';
+      import '@polymer/iron-icon/iron-icon.js';
+      import '@vaadin/vaadin-combo-box';
+    </script>
+
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h1>Basic sdl-multi-combo demo -- with 'url'</h1>
+      <demo-snippet>
+        <template>         
+
+<!-- If using as a stand-alone-component:  use sdl-multi-combo-loader.js
+<script src="./node_modules/@sdl-web/sdl-multi-combo/build-component/sdl-multi-combo-loader.js"></script> -->
+
+<!-- If using in an existing build project:  use sdl-multi-combo.js directly-->
+<!-- <script type="import" src="@sdl-web/sdl-multi-combo/src/components/sdl-multi-combo.js"></script>  -->
+
+<!-- Now add sdl-multi-combo to html section -->
+<form id="form1" action="testing">
+  <sdl-multi-combo name="combo1-data" id='combo1-data' url='./data/srch-data.txt' initvalue="1,2">  
+      <vaadin-combo-box name="combo1" item-label-path="name" item-value-path="_id" label="Name"></vaadin-combo-box>
+  </sdl-multi-combo>
+  <!-- <button id="submit_btn">Submit</button> -->
+</form>
+
+
+<!-- Finally, listen for change event -->
+<!-- <script>
+    $('document').ready(function(){
+
+      var comboData= document.querySelector('#combo1-data');
+      comboData.addEventListener("sdl-combo-ready", function(e) {
+        // Do something with the e.detail.payload here...
+      }, false);
+
+    });
+</script> -->
+
+        </template>
+      </demo-snippet>
+    </div>
+    <div id="message1"></div>
+    <br><br><br>
+
+
+
+ 
+    <script>
+    addEventListener('DOMContentLoaded', function(){ 
+
+    //    setTimeout(function(){ 
+          console.log("Start Listening...");
+        var data1 = document.querySelector('#combo1-data');
+        var btn = document.querySelector('#submit_btn');
+        var form1 = document.querySelector('#form1');
+
+          btn.addEventListener('click', function(e) {
+            //e.preventDefault();
+            console.log("SUBMIT CLICKED",e)
+            e.preventDefault();
+
+            var formData = $(form1).serialize();
+            console.log("FORM DATA=",formData)
+
+          },false);
+
+          data1.addEventListener("sdl-data-ready", function(e) {
+            var message = document.querySelector('#message1');
+            message.innerHTML = "<b><u>'data-ready' event fired:</u></b>&nbsp;&nbsp;&nbsp;";
+            message.innerHTML += "<br>e.detail.name = " + JSON.stringify(e.detail.name);
+            message.innerHTML += "<br>e.detail.payload = " + JSON.stringify(e.detail.payload);
+          }, false);
+
+          data1.addEventListener("change", function(e) {
+            var message = document.querySelector('#message1');
+            message.innerHTML = "<b><u>'input' event fired:</u></b>&nbsp;&nbsp;&nbsp;";
+            message.innerHTML += "<br>e.target.name = " + JSON.stringify(e.target.name);
+            message.innerHTML += "<br>e.target.value = " + JSON.stringify(e.target.value);
+          }, false);
+          
+      //  }, 1000);
+
+
+      }, false);
+
+    </script>
+  </body>
+</html>

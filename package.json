@@ -1,0 +1,34 @@
+{
+  "name": "@sdl-web/sdl-multi-combo",
+  "version": "1.0.0",
+  "description": " This html multi combo wraps any select component that takes an items array.  Important functionality for combos includes: 1.  Given a 'url' it will fetch the data for you (from the server) and insert it into the 'items' array of the combo in the slot.  2.  If multiselect is specified it will use the combo box in the slot to allow multiple selections and put them into pills below the combo input.",
+  "main": "index.js",
+  "repository": "git+https://github.com/generic-web-components/sdl-data.git",
+  "author": "Marty Israelsen",
+  "license": "MIT",
+  "dependencies": {
+    "@polymer/iron-ajax": "^3.0.0-pre.21",
+    "@polymer/lit-element": "0.6.1",
+    "@polymer/polymer": "^3.0.0-pre.13",
+    "@sdl-web/sdl-srch-bar": "^1.0.27",
+    "@vaadin/vaadin-combo-box": "^4.2.0-alpha4",
+    "jquery": "^3.3.1"
+  },
+  "resolutions": {
+    "@polymer/polymer": "3.0.2",
+    "@polymer/iron-icon": "3.0.0-pre.21",
+    "@polymer/iron-flex-layout": "3.0.1",
+    "@polymer/iron-meta": "3.0.1",
+    "@polymer/iron-iconset-svg": "3.0.0-pre.21",
+    "@polymer/iron-a11y-keys-behavior": "3.0.0-pre.21",
+    "@polymer/iron-a11y-announcer": "3.0.0-pre.21",
+    "@polymer/iron-ajax": "3.0.1"
+  },
+  "devDependencies": {
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.21",
+    "@polymer/iron-icon": "^3.0.0-pre.21",
+    "@polymer/iron-icons": "^3.0.0-pre.21",
+    "@polymer/paper-input": "^3.0.0-pre.21",
+    "@webcomponents/webcomponentsjs": "^2.0.2"
+  }
+}
