@@ -109,8 +109,8 @@ class sdlMultiCombo extends LitElement {
       }
     }
 
-    found = inputArray.find(function(value) { if (value === e.target.value) {return 1} return 0});
-    foundItem = e.target.items.find(function(items) { if (items[me.itemvalue] === e.target.value) {return 1} return 0});
+    found = inputArray.find(function(value) { if (value.toString() === e.target.value.toString()) {return 1} return 0});
+    foundItem = e.target.items.find(function(items) { if ((items[me.itemvalue]).toString() === e.target.value.toString()) {return 1} return 0});
     if (typeof found == 'undefined' && typeof foundItem != 'undefined') {
       inputArray.push(e.target.value);
       var newDiv = document.createElement("div");
