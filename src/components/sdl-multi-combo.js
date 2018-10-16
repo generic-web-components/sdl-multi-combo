@@ -32,8 +32,8 @@ class sdlMultiCombo extends LitElement {
       if (typeof this.name == 'undefined') {
         alert("Please add 'name' attribute to sdl-multi-combo");
       }
-      if (typeof this.initvalue == 'undefined') {
-        alert("Please add 'initvalue' attribute to sdl-multi-combo");
+      if (typeof this.value == 'undefined') {
+        alert("Please add 'value' attribute to sdl-multi-combo");
       }
 
       var slot = this.shadowRoot.querySelector('#default-slot');
@@ -64,6 +64,11 @@ class sdlMultiCombo extends LitElement {
     this.dispatchEvent(new CustomEvent('rendered'));  
   }
 
+  shouldUpdate(items) {
+    this.autoloadMultiCombo();
+    return true;
+  }
+
   _didRender(props, changedProps, prevProps) {
     this.dispatchEvent(new CustomEvent('rendered'));  
   }
@@ -90,13 +95,16 @@ class sdlMultiCombo extends LitElement {
       var multiInput = me.querySelector('#'+me.name);
       if (multiInput.value.length > 0) {
         var inputArray = multiInput.value.split(",");
+        for (var i=0; i<inputArray.length; i++) {
+          inputArray[i] = inputArray[i].toString().trim();
+        }
       } else {
         var inputArray = [];
       }
 
       var idx = inputArray.indexOf(e.data.obj[me.itemvalue]);
       if (idx == -1) {
-        var idx = inputArray.indexOf((e.data.obj[me.itemvalue]).toString());
+        var idx = inputArray.indexOf((e.data.obj[me.itemvalue]).toString().trim());
       }
 
       if (idx != -1) {
@@ -109,8 +117,8 @@ class sdlMultiCombo extends LitElement {
       }
     }
 
-    found = inputArray.find(function(value) { if (value.toString() === e.target.value.toString()) {return 1} return 0});
-    foundItem = e.target.items.find(function(items) { if ((items[me.itemvalue]).toString() === e.target.value.toString()) {return 1} return 0});
+    found = inputArray.find(function(value) { if (value.toString().trim() === e.target.value.toString().trim()) {return 1} return 0});
+    foundItem = me.items.find(function(items) { if ((items[me.itemvalue]).toString().trim() === e.target.value.toString().trim()) {return 1} return 0});
     if (typeof found == 'undefined' && typeof foundItem != 'undefined') {
       inputArray.push(e.target.value);
       var newDiv = document.createElement("div");
@@ -131,8 +139,24 @@ class sdlMultiCombo extends LitElement {
     e.target.value = "";
   }
 
-
-
+  autoloadMultiCombo() {
+    var me = this;
+    var multiInput = me.querySelector('#'+me.name);
+    if (typeof multiInput == 'undefined' || multiInput == null) { 
+      return 
+    }
+    var inputArray = me.value.split(",");
+    for(var i=0; i<inputArray.length; i++) {
+      me.dispatchEvent(new CustomEvent('change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          value: inputArray[i],
+          items: me.items
+        }
+      }));   
+    }
+  }
   
   sendAjax(nodes) {
     var me = this;
@@ -154,20 +178,7 @@ class sdlMultiCombo extends LitElement {
             if (typeof nodes[i] !== 'undefined' && 'items' in nodes[i]) {
               nodes[i].items = resp.payload;
               me.items = resp.payload;
-
-              var multiInput = me.querySelector('#'+me.name);
-              var inputArray = me.initvalue.split(",");
-              for(var i=0; i<inputArray.length; i++) {
-                me.dispatchEvent(new CustomEvent('change', {
-                  bubbles: true,
-                  composed: true,
-                  detail: {
-                    value: inputArray[i],
-                    items: me.items
-                  }
-                }));   
-              }
-        
+              me.autoloadMultiCombo();
             }
           }
         }
@@ -186,6 +197,8 @@ class sdlMultiCombo extends LitElement {
     });
  }
 
+
+
   static get properties() { 
     return { 
       url: {
@@ -203,8 +216,10 @@ class sdlMultiCombo extends LitElement {
       itemvalue: {
         type: String
       },
-      initvalue: {
-        type: String
+      value: {
+        type: String,
+        reflect: true,
+        attribute: true
       }
     }
   }
