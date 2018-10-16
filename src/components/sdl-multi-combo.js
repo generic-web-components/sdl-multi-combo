@@ -21,14 +21,20 @@ class sdlMultiCombo extends LitElement {
     super();
     var me = this;
 
-    if (typeof this.itemlabel == 'undefined') {
-      this.itemlabel = "name";
-    }
-    if (typeof this.itemvalue == 'undefined') {
-      this.itemvalue = "_id";
-    }
-
     this.addEventListener('rendered', async (e) => {
+
+      if (typeof this.itemlabel == 'undefined') {
+        alert("Please add 'itemlabel' attribute to sdl-multi-combo");
+      }
+      if (typeof this.itemvalue == 'undefined') {
+        alert("Please add 'itemvalue' attribute to sdl-multi-combo");
+      }
+      if (typeof this.name == 'undefined') {
+        alert("Please add 'name' attribute to sdl-multi-combo");
+      }
+      if (typeof this.initvalue == 'undefined') {
+        alert("Please add 'initvalue' attribute to sdl-multi-combo");
+      }
 
       var slot = this.shadowRoot.querySelector('#default-slot');
       var slotNodes = slot.assignedNodes();
@@ -89,11 +95,17 @@ class sdlMultiCombo extends LitElement {
       }
 
       var idx = inputArray.indexOf(e.data.obj[me.itemvalue]);
+      if (idx == -1) {
+        var idx = inputArray.indexOf((e.data.obj[me.itemvalue]).toString());
+      }
+
       if (idx != -1) {
         inputArray.splice(idx,1);
         multiInput.value = inputArray.join(",");
         me.value = multiInput.value;
         e.data.pill.remove();
+      } else {
+        console.log("Could not find matching value to delete",e.data.obj,me.itemvalue)
       }
     }
 
@@ -116,6 +128,7 @@ class sdlMultiCombo extends LitElement {
     }
     multiInput.value = inputArray.join(",");
     me.value = multiInput.value;
+    e.target.value = "";
   }
 
 

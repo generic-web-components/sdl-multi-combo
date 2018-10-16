@@ -1,4 +1,4 @@
-echo "\nBuilding sdl-combo-wrapper component...\n"
+echo "\nBuilding sdl-multi-combo component...\n"
 echo "Note:  Please wait until build has finished -- canceling in the middle of the build could leave it in a weird state\n\n"
 rm -rf ./build-demo ./build-component
 
