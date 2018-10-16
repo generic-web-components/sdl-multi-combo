@@ -250,7 +250,7 @@ class sdlMultiCombo extends LitElement {
           margin: 1px;
           border: 1px solid #B2B2B2;
           border-radius: 8px;
-          display: inline-block;
+          display: -webkit-inline-box;
           background-color: #eeeeee;
         }
   
