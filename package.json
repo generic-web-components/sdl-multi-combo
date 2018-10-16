@@ -1,6 +1,6 @@
 {
   "name": "@sdl-web/sdl-multi-combo",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": " This html multi combo wraps any select component that takes an items array.  Important functionality for combos includes: 1.  Given a 'url' it will fetch the data for you (from the server) and insert it into the 'items' array of the combo in the slot.  2.  If multiselect is specified it will use the combo box in the slot to allow multiple selections and put them into pills below the combo input.",
   "main": "index.js",
   "repository": "git+https://github.com/generic-web-components/sdl-data.git",
@@ -12,7 +12,7 @@
     "@polymer/polymer": "3.0.0-pre.13",
     "@sdl-web/sdl-srch-bar": "1.0.27",
     "@vaadin/vaadin-combo-box": "4.2.0-alpha4",
-    "jquery": "^3.3.1"
+    "jquery": "3.3.1"
   },
   "resolutions": {
     "@polymer/polymer": "3.0.2",

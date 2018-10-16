@@ -74,13 +74,15 @@ class sdlMultiCombo extends LitElement {
   }
 
   handleChangedEvent(e) {
+    var me = this;
+    var multiInput = this.querySelector('#'+me.name);
+    if (typeof multiInput == 'undefined' || multiInput == null) { return }
 
     if (e.detail != null && typeof e.detail != 'undefined' && typeof e.detail.value != 'undefined') {
       e.target.value = e.detail.value;
     }
 
-    var me = this;
-    var multiInput = this.querySelector('#'+me.name);
+
     var multiDiv = this.shadowRoot.querySelector('#multi-div');
     var found = 0;
     var foundItem = 0;
@@ -136,16 +138,26 @@ class sdlMultiCombo extends LitElement {
     }
     multiInput.value = inputArray.join(",");
     me.value = multiInput.value;
-    e.target.value = "";
   }
 
   autoloadMultiCombo() {
     var me = this;
-    var multiInput = me.querySelector('#'+me.name);
-    if (typeof multiInput == 'undefined' || multiInput == null) { 
-      return 
+    if (typeof me.value == 'undefined') {
+      return
     }
-    var inputArray = me.value.split(",");
+    var multiInput = me.querySelector('#'+me.name);
+    if (typeof multiInput == 'undefined' || multiInput === null) {
+      return;
+    }
+
+    // First, remove all old pills.
+    var pillList = this.shadowRoot.querySelectorAll(".pill-button");
+    for(var i=0; i<pillList.length; i++) {
+      pillList[i].remove();
+      multiInput.value = "";
+    }
+
+    var inputArray = me.value.toString().split(",");
     for(var i=0; i<inputArray.length; i++) {
       me.dispatchEvent(new CustomEvent('change', {
         bubbles: true,
