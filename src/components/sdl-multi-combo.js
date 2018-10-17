@@ -29,8 +29,8 @@ class sdlMultiCombo extends LitElement {
       if (typeof this.itemvalue == 'undefined') {
         alert("Please add 'itemvalue' attribute to sdl-multi-combo");
       }
-      if (typeof this.name == 'undefined') {
-        alert("Please add 'name' attribute to sdl-multi-combo");
+      if (typeof this.comboname == 'undefined') {
+        alert("Please add 'comboname' attribute to sdl-multi-combo");
       }
       if (typeof this.value == 'undefined') {
         alert("Please add 'value' attribute to sdl-multi-combo");
@@ -47,8 +47,8 @@ class sdlMultiCombo extends LitElement {
       // This input field will hold the values to be submitted in any form
       var input = document.createElement("input");
 
-      input.name = me.name;
-      input.id = me.name;
+      input.name = me.comboname;
+      input.id = me.comboname;
       input.hidden = true;
 
       this.appendChild(input);
@@ -75,7 +75,7 @@ class sdlMultiCombo extends LitElement {
 
   handleChangedEvent(e) {
     var me = this;
-    var multiInput = this.querySelector('#'+me.name);
+    var multiInput = this.querySelector('#'+me.comboname);
     if (typeof multiInput == 'undefined' || multiInput == null) { return }
 
     if (e.detail != null && typeof e.detail != 'undefined' && typeof e.detail.value != 'undefined') {
@@ -94,7 +94,7 @@ class sdlMultiCombo extends LitElement {
     }
 
     function removeItem(e) {
-      var multiInput = me.querySelector('#'+me.name);
+      var multiInput = me.querySelector('#'+me.comboname);
       if (multiInput.value.length > 0) {
         var inputArray = multiInput.value.split(",");
         for (var i=0; i<inputArray.length; i++) {
@@ -145,7 +145,7 @@ class sdlMultiCombo extends LitElement {
     if (typeof me.value == 'undefined') {
       return
     }
-    var multiInput = me.querySelector('#'+me.name);
+    var multiInput = me.querySelector('#'+me.comboname);
     if (typeof multiInput == 'undefined' || multiInput === null) {
       return;
     }
@@ -201,7 +201,7 @@ class sdlMultiCombo extends LitElement {
           composed: true,
           detail: {
             target: me,
-            name: me.name,
+            name: me.comboname,
             payload: resp.payload
           }
         }));
@@ -216,7 +216,7 @@ class sdlMultiCombo extends LitElement {
       url: {
         type: String
       },
-      name: {
+      comboname: {
         type: String
       },
       multiselect: {
