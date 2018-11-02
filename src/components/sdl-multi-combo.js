@@ -42,6 +42,7 @@ class sdlMultiCombo extends LitElement {
           || typeof slotNodes[0].nodeName == 'undefined') {
             console.log("Nothing put into slot");
       }
+      this.slotNodes = slotNodes;
 
       // Create the input field that will be outside the shadow DOM.  
       // This input field will hold the values to be submitted in any form
@@ -138,6 +139,14 @@ class sdlMultiCombo extends LitElement {
     }
     multiInput.value = inputArray.join(",");
     me.value = multiInput.value;
+
+    // Finally blank out the value in the field after all is 
+    // done so the user does not get confused as to what is in the result set.
+    for(var i=0;i<me.slotNodes.length;i++) {
+      if (typeof me.slotNodes[i] !== 'undefined' && 'items' in me.slotNodes[i]) {
+        me.slotNodes[i].value = '';
+      }
+    }
   }
 
   autoloadMultiCombo() {
@@ -189,6 +198,7 @@ class sdlMultiCombo extends LitElement {
           for(var i=0;i<nodes.length;i++) {
             if (typeof nodes[i] !== 'undefined' && 'items' in nodes[i]) {
               nodes[i].items = resp.payload;
+              nodes[i].value = '';
               me.items = resp.payload;
               me.autoloadMultiCombo();
             }
